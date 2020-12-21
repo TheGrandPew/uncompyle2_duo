@@ -74,6 +74,7 @@ def _load_module(filename):
     #print version
     fp.read(4) # timestamp
     co = dis.marshalLoad(fp)
+    print(co)
     fp.close()
     return version, co
 
