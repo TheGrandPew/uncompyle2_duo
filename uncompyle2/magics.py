@@ -61,6 +61,7 @@ versions = {
     __build_magic(3160): '3.2',  #3.2a0 (add SETUP_WITH)
     __build_magic(3170): '3.2',  #3.2a1 (add DUP_TOP_TWO, remove DUP_TOPX and ROT_FOUR)
     __build_magic(3180): '3.2',  #3.2a2 (add DELETE_DEREF)
+    __build_magic(62666): '2.69',
 }
 
 magics = __by_version(versions)

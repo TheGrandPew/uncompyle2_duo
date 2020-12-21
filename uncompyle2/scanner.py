@@ -12,7 +12,7 @@ from collections import namedtuple
 from array import array
 from operator import itemgetter
 
-from uncompyle2.opcode import opcode_25, opcode_26, opcode_27
+from uncompyle2.opcode import opcode_25, opcode_26, opcode_27 opcode_269
 
 class Token:
     '''
@@ -69,6 +69,8 @@ class Scanner(object):
             self.opc = opcode_26
         elif version == 2.5:
             self.opc = opcode_25
+        elif version == 2.69:
+            self.opc = opcode_269
         
         return self.resetTokenClass()
     

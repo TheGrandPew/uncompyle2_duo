@@ -98,6 +98,9 @@ def uncompyle(version, co, out=None, showasm=0, showast=0):
     elif version == 2.5:
         import scanner25 as scan
         scanner = scan.Scanner25()
+    elif version == 2.69:
+        import scanner269 as scan
+        scanner = scan.Scanner269()
     scanner.setShowAsm(showasm, out)
     tokens, customize = scanner.disassemble(co)
 
