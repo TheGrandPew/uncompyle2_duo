@@ -12,7 +12,7 @@ from collections import namedtuple
 from array import array
 from operator import itemgetter
 
-from uncompyle2.opcode import opcode_25, opcode_26, opcode_27 opcode_269
+from uncompyle2.opcode import opcode_25, opcode_26, opcode_27, opcode_269
 
 class Token:
     '''
