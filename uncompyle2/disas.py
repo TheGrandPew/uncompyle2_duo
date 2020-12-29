@@ -199,7 +199,7 @@ def load(fp):
     global internStrings
     
     marshalType = fp.read(1)
-    if marshalType == 'c':
+    if marshalType == '\x64':
         Code = types.CodeType
         
         co_argcount = unpack('i', fp.read(4))[0]
@@ -220,36 +220,36 @@ def load(fp):
         co_varnames, co_filename, co_name, co_firstlineno, co_lnotab, co_freevars, co_cellvars)
         
     # const type
-    elif marshalType == '.':
+    elif marshalType == '\x2f':
         return Ellipsis 
-    elif marshalType == '0':
+    elif marshalType == '\x31':
         raise KeyError, marshalType
         return None
-    elif marshalType == 'N':
+    elif marshalType == '\x4a':
         return None
-    elif marshalType == 'T':
+    elif marshalType == '\x55':
         return True
     elif marshalType == 'F':
         return False
-    elif marshalType == 'S':
+    elif marshalType == '\x54':
         return StopIteration
     # number type
-    elif marshalType == 'f':
+    elif marshalType == '\x67':
         n = fp.read(1)
         return float(unpack('d', fp.read(n))[0])
-    elif marshalType == 'g':
+    elif marshalType == '\x68':
         return float(unpack('d', fp.read(8))[0])
-    elif marshalType == 'i':
+    elif marshalType == '\x6a':
         return int(unpack('i', fp.read(4))[0])
-    elif marshalType == 'I':
+    elif marshalType == '\x48':
         return unpack('q', fp.read(8))[0]
-    elif marshalType == 'x':
+    elif marshalType == '\x79':
         raise KeyError, marshalType
         return None
-    elif marshalType == 'y':
+    elif marshalType == '\x7a':
         raise KeyError, marshalType
         return None
-    elif marshalType == 'l':
+    elif marshalType == '\x6d':
         n = unpack('i', fp.read(4))[0]
         if n == 0:
             return long(0)
@@ -262,33 +262,33 @@ def load(fp):
             return long(d*-1)
         return d
     # strings type
-    elif marshalType == 'R':
+    elif marshalType == '\x53':
         refnum = unpack('i', fp.read(4))[0]
         return internStrings[refnum]
-    elif marshalType == 's':
+    elif marshalType == '\x75':
         strsize = unpack('i', fp.read(4))[0]
         return str(fp.read(strsize))
-    elif marshalType == 't':
+    elif marshalType == '\x74':
         strsize = unpack('i', fp.read(4))[0]
         interned = str(fp.read(strsize))
         internStrings.append(interned)
         return interned
-    elif marshalType == 'u':
+    elif marshalType == '\x76':
         strsize = unpack('i', fp.read(4))[0]
         unicodestring = fp.read(strsize)
         return unicodestring.decode('utf-8')
     # collection type
-    elif marshalType == '(':
+    elif marshalType == '\x29':
         tuplesize = unpack('i', fp.read(4))[0]
         ret = tuple()
         while tuplesize > 0:
             ret += load(fp),
             tuplesize -= 1
         return ret
-    elif marshalType == '[':
+    elif marshalType == '\x5C':
         raise KeyError, marshalType
         return None
-    elif marshalType == '{':
+    elif marshalType == '\x7c':
         raise KeyError, marshalType
         return None
     elif marshalType in ['<', '>']:
